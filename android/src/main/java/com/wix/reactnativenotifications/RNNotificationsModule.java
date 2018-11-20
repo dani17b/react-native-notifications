@@ -80,8 +80,13 @@ public class RNNotificationsModule extends ReactContextBaseJavaModule implements
     public void postLocalNotification(ReadableMap notificationPropsMap, int notificationId) {
         Log.d(LOGTAG, "Native method invocation: postLocalNotification");
         final Bundle notificationProps = Arguments.toBundle(notificationPropsMap);
-        final IPushNotification pushNotification = PushNotification.get(getReactApplicationContext().getApplicationContext(), notificationProps);
-        pushNotification.onPostRequest(notificationId);
+
+        try{
+            final IPushNotification pushNotification = PushNotification.get(getReactApplicationContext().getApplicationContext(), notificationProps);
+            pushNotification.onPostRequest(notificationId);
+        }catch(final IPushNotification.InvalidNotificationException e){
+            // Error al obtener la notificacion
+        }
     }
 
     @ReactMethod
