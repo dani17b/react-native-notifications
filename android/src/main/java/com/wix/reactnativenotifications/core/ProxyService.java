@@ -20,9 +20,15 @@ public class ProxyService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "New intent: "+intent);
         final Bundle notificationData = NotificationIntentAdapter.extractPendingNotificationDataFromIntent(intent);
-        final IPushNotification pushNotification = PushNotification.get(this, notificationData);
-        if (pushNotification != null) {
-            pushNotification.onOpened();
+
+        try{
+            final IPushNotification pushNotification = PushNotification.get(this, notificationData);
+
+            if (pushNotification != null) {
+                pushNotification.onOpened();
+            }
+        }catch(final IPushNotification.InvalidNotificationException e){
+            // Error al obtener la notificacion
         }
     }
 }

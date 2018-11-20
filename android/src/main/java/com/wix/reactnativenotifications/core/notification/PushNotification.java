@@ -42,7 +42,7 @@ public class PushNotification implements IPushNotification {
         }
     };
 
-    public static IPushNotification get(Context context, Bundle bundle) {
+    public static IPushNotification get(Context context, Bundle bundle) throws IPushNotification.InvalidNotificationException{
         Context appContext = context.getApplicationContext();
         if (appContext instanceof INotificationsApplication) {
             return ((INotificationsApplication) appContext).getPushNotification(context, bundle, AppLifecycleFacadeHolder.get(), new AppLaunchHelper());
